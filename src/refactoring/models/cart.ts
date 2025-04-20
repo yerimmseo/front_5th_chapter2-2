@@ -1,11 +1,26 @@
 import { CartItem, Coupon } from "../../types";
 
 export const calculateItemTotal = (item: CartItem) => {
-  return 0;
+  const applicableDiscount = item.product.discounts
+    .filter((rule) => item.quantity >= rule.quantity)
+    .sort((a, b) => b.quantity - a.quantity)[0];
+
+  const discountRate = applicableDiscount?.rate ?? 0;
+
+  const totalPrice = item.product.price * item.quantity;
+  const discountAmount = totalPrice * discountRate;
+
+  return totalPrice - discountAmount;
 };
 
 export const getMaxApplicableDiscount = (item: CartItem) => {
-  return 0;
+  const applicableDiscount = item.product.discounts
+    .filter((rule) => item.quantity >= rule.quantity)
+    .sort((a, b) => b.quantity - a.quantity)[0];
+
+  const discountRate = applicableDiscount?.rate ?? 0;
+
+  return discountRate;
 };
 
 export const calculateCartTotal = (
