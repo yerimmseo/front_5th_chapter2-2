@@ -60,18 +60,8 @@ export const useCart = () => {
   };
 
   const calculateTotal = () => {
-    const totalBeforeDiscount = cart.reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0
-    );
-
-    const totalDiscount = selectedCoupon
-      ? selectedCoupon.discountType === "amount"
-        ? Math.min(selectedCoupon.discountValue, totalBeforeDiscount)
-        : (totalBeforeDiscount * selectedCoupon.discountValue) / 100
-      : 0;
-
-    const totalAfterDiscount = totalBeforeDiscount - totalDiscount;
+    const { totalBeforeDiscount, totalDiscount, totalAfterDiscount } =
+      calculateCartTotal(cart, selectedCoupon);
 
     return {
       totalBeforeDiscount, // 할인 전 상품 금액
