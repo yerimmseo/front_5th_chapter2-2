@@ -5,22 +5,15 @@ export const useProducts = (initialProducts: Product[]) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
   const updateProduct = (newProduct: Product) => {
-    setProducts((currentProducts) => {
-      const existingProduct = currentProducts.findIndex(
-        (product) => product.id === newProduct.id
-      );
-
-      if (existingProduct > -1) {
-        const updateProduct = [...currentProducts];
-        updateProduct[existingProduct] = newProduct;
-        return updateProduct;
-      }
-      return currentProducts;
-    });
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === newProduct.id ? newProduct : product
+      )
+    );
   };
 
   const addProduct = (product: Product) => {
-    setProducts((currentProducts) => [...currentProducts, product]);
+    setProducts((prevProducts) => [...prevProducts, product]);
   };
 
   return {
