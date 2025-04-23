@@ -1,18 +1,22 @@
 import { CartItem as Item } from "../../types";
+import { useCartContext } from "../contexts/CartContext";
 import { CartItem } from "./CartItem";
 
-type CartListProps = {
-  cart: Item[];
-  getAppliedDiscount: (item: Item) => number;
-  updateQuantity: (productId: string, newQuantity: number) => void;
-  removeFromCart: (productId: string) => void;
-};
-export const CartList = ({
-  cart,
-  getAppliedDiscount,
-  updateQuantity,
-  removeFromCart,
-}: CartListProps) => {
+export const CartList = () => {
+  const { cart } = useCartContext();
+
+  const getAppliedDiscount = (item: Item) => {
+    const { discounts } = item.product;
+    const { quantity } = item;
+    let appliedDiscount = 0;
+    for (const discount of discounts) {
+      if (quantity >= discount.quantity) {
+        appliedDiscount = Math.max(appliedDiscount, discount.rate);
+      }
+    }
+    return appliedDiscount;
+  };
+
   return (
     <>
       <h2 className="text-2xl font-semibold mb-4">장바구니 내역</h2>
@@ -20,14 +24,7 @@ export const CartList = ({
         {cart.map((item) => {
           const appliedDiscount = getAppliedDiscount(item);
 
-          return (
-            <CartItem
-              item={item}
-              appliedDiscount={appliedDiscount}
-              updateQuantity={updateQuantity}
-              removeFromCart={removeFromCart}
-            />
-          );
+          return <CartItem item={item} appliedDiscount={appliedDiscount} />;
         })}
       </div>
     </>

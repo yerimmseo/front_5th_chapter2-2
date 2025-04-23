@@ -1,16 +1,10 @@
-import { Coupon } from "../../types";
+import { useCartContext } from "../contexts/CartContext";
+import { useCouponContext } from "../contexts/CouponContext";
 
-type CouponSelectorProps = {
-  coupons: Coupon[];
-  applyCoupon: (coupon: Coupon) => void;
-  selectedCoupon: Coupon | null;
-};
+export const CouponSelector = () => {
+  const { coupons } = useCouponContext();
+  const { applyCoupon, selectedCoupon } = useCartContext();
 
-export const CouponSelector = ({
-  coupons,
-  applyCoupon,
-  selectedCoupon,
-}: CouponSelectorProps) => {
   return (
     <div className="mt-6 bg-white p-4 rounded shadow">
       <h2 className="text-2xl font-semibold mb-2">쿠폰 적용</h2>

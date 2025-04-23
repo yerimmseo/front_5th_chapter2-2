@@ -1,18 +1,14 @@
 import { CartItem as Item } from "../../types";
+import { useCartContext } from "../contexts/CartContext";
 
 type CartItemProps = {
   item: Item;
   appliedDiscount: number;
-  updateQuantity: (productId: string, newQuantity: number) => void;
-  removeFromCart: (productId: string) => void;
 };
 
-export const CartItem = ({
-  item,
-  appliedDiscount,
-  updateQuantity,
-  removeFromCart,
-}: CartItemProps) => {
+export const CartItem = ({ item, appliedDiscount }: CartItemProps) => {
+  const { updateQuantity, removeFromCart } = useCartContext();
+
   return (
     <div
       key={item.product.id}

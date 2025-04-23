@@ -1,19 +1,23 @@
 import { Product } from "../../types";
+import { useCartContext } from "../contexts/CartContext";
 
 type ProductCardProps = {
   product: Product;
-  remainingStock: number;
-  onAddToCart: (product: Product) => void;
 };
 
-export const ProductCard = ({
-  product,
-  remainingStock,
-  onAddToCart,
-}: ProductCardProps) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
+  const { cart, addToCart } = useCartContext();
+
   const getMaxDiscount = (discounts: { quantity: number; rate: number }[]) => {
     return discounts.reduce((max, discount) => Math.max(max, discount.rate), 0);
   };
+
+  const getRemainingStock = (product: Product) => {
+    const cartItem = cart.find((item) => item.product.id === product.id);
+    return product.stock - (cartItem?.quantity || 0);
+  };
+
+  const remainingStock = getRemainingStock(product);
 
   return (
     <div
@@ -52,7 +56,7 @@ export const ProductCard = ({
         </ul>
       )}
       <button
-        onClick={() => onAddToCart(product)}
+        onClick={() => addToCart(product)}
         className={`w-full px-3 py-1 rounded ${
           remainingStock > 0
             ? "bg-blue-500 text-white hover:bg-blue-600"
