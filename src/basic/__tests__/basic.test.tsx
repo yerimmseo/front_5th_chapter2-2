@@ -8,11 +8,14 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import { CartPage } from "../../refactoring/components/CartPage";
+import { CartPage } from "../../refactoring/pages/CartPage";
 import { AdminPage } from "../../refactoring/components/AdminPage";
 import { CartItem, Coupon, Product } from "../../types";
 import { useCart, useCoupons, useProducts } from "../../refactoring/hooks";
 import * as cartUtils from "../../refactoring/models/cart";
+import { ProductProvider } from "../../refactoring/contexts/ProductContext";
+import { CouponProvider } from "../../refactoring/contexts/CouponContext";
+import { CartProvider } from "../../refactoring/contexts/CartContext";
 
 const mockProducts: Product[] = [
   {
@@ -81,10 +84,23 @@ const TestAdminPage = () => {
   );
 };
 
+const TestCartPage = () => {
+  return (
+    <ProductProvider initialProducts={mockProducts}>
+      <CouponProvider initialCoupons={mockCoupons}>
+        <CartProvider>
+          <CartPage />
+        </CartProvider>
+      </CouponProvider>
+    </ProductProvider>
+  );
+};
+
 describe("basic > ", () => {
   describe("시나리오 테스트 > ", () => {
     test("장바구니 페이지 테스트 > ", async () => {
-      render(<CartPage products={mockProducts} coupons={mockCoupons} />);
+      // render(<CartPage products={mockProducts} coupons={mockCoupons} />);
+      render(<TestCartPage />);
       const product1 = screen.getByTestId("product-p1");
       const product2 = screen.getByTestId("product-p2");
       const product3 = screen.getByTestId("product-p3");
