@@ -17,6 +17,15 @@ export const getMaxApplicableDiscount = (item: CartItem) => {
   return maxDiscountRate;
 };
 
+export const getAppliedDiscount = (item: CartItem) => {
+  const { discounts } = item.product;
+  const { quantity } = item;
+
+  return discounts
+    .filter((discount) => quantity >= discount.quantity)
+    .reduce((maxRate, discount) => Math.max(maxRate, discount.rate), 0);
+};
+
 export const applyCouponDiscount = (
   totalAmount: number,
   selectedCoupon: Coupon
