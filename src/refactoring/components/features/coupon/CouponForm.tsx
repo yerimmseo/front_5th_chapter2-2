@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Coupon } from "../../../../types";
 import { useCouponContext } from "../../../contexts/CouponContext";
 import { createNewCoupon } from "../../../models/coupon";
+import { SelectBox } from "../../common/SelectBox";
 
 export const CouponForm = () => {
   const { addCoupon } = useCouponContext();
@@ -29,19 +30,20 @@ export const CouponForm = () => {
         className="w-full p-2 border rounded"
       />
       <div className="flex gap-2">
-        <select
+        <SelectBox
           value={newCoupon.discountType}
-          onChange={(e) =>
+          className="w-full p-2 border rounded"
+          options={[
+            { label: "금액(원)", value: "amount" },
+            { label: "할인율(%)", value: "percentage" },
+          ]}
+          onChange={(value) =>
             setNewCoupon({
               ...newCoupon,
-              discountType: e.target.value as "amount" | "percentage",
+              discountType: value as "amount" | "percentage",
             })
           }
-          className="w-full p-2 border rounded"
-        >
-          <option value="amount">금액(원)</option>
-          <option value="percentage">할인율(%)</option>
-        </select>
+        />
         <input
           type="number"
           placeholder="할인 값"
