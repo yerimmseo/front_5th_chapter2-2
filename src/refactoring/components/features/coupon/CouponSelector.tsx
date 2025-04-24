@@ -1,7 +1,7 @@
 import { useCartContext } from "../../../contexts/CartContext";
 import { useCouponContext } from "../../../contexts/CouponContext";
 import { formatCurrency } from "../../../utils/formatCurrency";
-import { SelectBox } from "../../common/SelectBox";
+import { OptionSelector } from "../../ui/common/OptionSelector";
 
 export const CouponSelector = () => {
   const { coupons } = useCouponContext();
@@ -10,7 +10,7 @@ export const CouponSelector = () => {
   return (
     <div className="mt-6 bg-white p-4 rounded shadow">
       <h2 className="text-2xl font-semibold mb-2">쿠폰 적용</h2>
-      <SelectBox
+      <OptionSelector
         value={coupons.findIndex(
           (coupon) => coupon.code === selectedCoupon?.code
         )}

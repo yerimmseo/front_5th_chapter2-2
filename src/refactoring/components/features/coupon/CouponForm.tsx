@@ -1,16 +1,25 @@
 import { useState } from "react";
 import { Coupon } from "../../../../types";
 import { useCouponContext } from "../../../contexts/CouponContext";
-import { createNewCoupon } from "../../../models/coupon";
-import { SelectBox } from "../../common/SelectBox";
+import { OptionSelector } from "../../ui/common/OptionSelector";
 
 export const CouponForm = () => {
   const { addCoupon } = useCouponContext();
-  const [newCoupon, setNewCoupon] = useState<Coupon>(createNewCoupon());
+  const [newCoupon, setNewCoupon] = useState<Coupon>({
+    name: "",
+    code: "",
+    discountType: "percentage",
+    discountValue: 0,
+  });
 
   const handleAddCoupon = () => {
     addCoupon(newCoupon);
-    setNewCoupon(createNewCoupon());
+    setNewCoupon({
+      name: "",
+      code: "",
+      discountType: "percentage",
+      discountValue: 0,
+    });
   };
 
   return (
@@ -30,7 +39,7 @@ export const CouponForm = () => {
         className="w-full p-2 border rounded"
       />
       <div className="flex gap-2">
-        <SelectBox
+        <OptionSelector
           value={newCoupon.discountType}
           className="w-full p-2 border rounded"
           options={[
