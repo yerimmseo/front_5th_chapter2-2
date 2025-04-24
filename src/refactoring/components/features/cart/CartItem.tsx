@@ -1,5 +1,6 @@
 import { CartItem as Item } from "../../../../types";
 import { useCartContext } from "../../../contexts/CartContext";
+import { localizedNumberFormat } from "../../../utils/formatting";
 
 type CartItemProps = {
   item: Item;
@@ -18,7 +19,7 @@ export const CartItem = ({ item, appliedDiscount }: CartItemProps) => {
         <span className="font-semibold">{item.product.name}</span>
         <br />
         <span className="text-sm text-gray-600">
-          {item.product.price}원 x {item.quantity}
+          {localizedNumberFormat(item.product.price)}원 x {item.quantity}
           {appliedDiscount > 0 && (
             <span className="text-green-600 ml-1">
               ({(appliedDiscount * 100).toFixed(0)}% 할인 적용)

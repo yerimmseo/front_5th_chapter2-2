@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Discount, Product } from "../../../../types";
 import { useProductContext } from "../../../contexts/ProductContext";
 import { ProductForm } from "./ProductForm";
+import { localizedNumberFormat } from "../../../utils/formatting";
 
 export const ProductManagement = () => {
   const { products, updateProduct } = useProductContext();
@@ -115,7 +116,8 @@ export const ProductManagement = () => {
               onClick={() => toggleProductAccordion(product.id)}
               className="w-full text-left font-semibold"
             >
-              {product.name} - {product.price}원 (재고: {product.stock})
+              {product.name} - {localizedNumberFormat(product.price)}원 (재고:{" "}
+              {product.stock})
             </button>
             {openProductIds.has(product.id) && (
               <div className="mt-2">
