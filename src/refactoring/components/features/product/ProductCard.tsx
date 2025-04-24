@@ -1,5 +1,7 @@
 import { Product } from "../../../../types";
 import { useCartContext } from "../../../contexts/CartContext";
+import { getRemainingStock } from "../../../models/product";
+import { getMaxDiscount } from "../../../utils";
 
 type ProductCardProps = {
   product: Product;
@@ -8,16 +10,7 @@ type ProductCardProps = {
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { cart, addToCart } = useCartContext();
 
-  const getMaxDiscount = (discounts: { quantity: number; rate: number }[]) => {
-    return discounts.reduce((max, discount) => Math.max(max, discount.rate), 0);
-  };
-
-  const getRemainingStock = (product: Product) => {
-    const cartItem = cart.find((item) => item.product.id === product.id);
-    return product.stock - (cartItem?.quantity || 0);
-  };
-
-  const remainingStock = getRemainingStock(product);
+  const remainingStock = getRemainingStock(cart, product);
 
   return (
     <div
