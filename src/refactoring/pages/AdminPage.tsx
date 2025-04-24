@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { Coupon, Discount, Product } from "../../types.ts";
-import { ColumnLayout } from "./ColumnLayout.tsx";
+import { ColumnLayout } from "../components/ColumnLayout.tsx";
 
 interface Props {
   products: Product[];
