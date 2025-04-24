@@ -10,7 +10,9 @@ export const CouponSelector = () => {
     <div className="mt-6 bg-white p-4 rounded shadow">
       <h2 className="text-2xl font-semibold mb-2">쿠폰 적용</h2>
       <SelectBox
-        value=""
+        value={coupons.findIndex(
+          (coupon) => coupon.code === selectedCoupon?.code
+        )}
         placeholder="쿠폰 선택"
         className="w-full p-2 border rounded mb-2"
         options={coupons.map((coupon, index) => ({
