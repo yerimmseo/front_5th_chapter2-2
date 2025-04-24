@@ -28,6 +28,7 @@ export const CouponForm = () => {
         type="text"
         placeholder="쿠폰 이름"
         value={newCoupon.name}
+        name="name"
         onChange={(e) => setNewCoupon({ ...newCoupon, name: e.target.value })}
         className="w-full p-2 border rounded"
       />
@@ -35,6 +36,7 @@ export const CouponForm = () => {
         type="text"
         placeholder="쿠폰 코드"
         value={newCoupon.code}
+        name="code"
         onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value })}
         className="w-full p-2 border rounded"
       />
