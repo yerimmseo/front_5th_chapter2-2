@@ -260,20 +260,6 @@ describe("advanced > ", () => {
     });
   });
 
-  // describe("자유롭게 작성해보세요.", () => {
-  //   test("새로운 유틸 함수를 만든 후에 테스트 코드를 작성해서 실행해보세요", () => {
-  //     expect(true).toBe(true);
-  //   });
-
-  //   test("1000을 입력하면 '1,000을 반환한다", () => {
-  //     expect(localizedNumberFormat(1000)).toBe("1,000");
-  //   });
-
-  //   test("새로운 hook 함수르 만든 후에 테스트 코드를 작성해서 실행해보세요", () => {
-  //     expect(true).toBe(true);
-  //   });
-  // });
-
   describe("formatCurrency", () => {
     test("1000을 입력하면 '1,000'을 반환한다.", () => {
       expect(formatCurrency(1000)).toBe("1,000");

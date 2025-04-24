@@ -12,6 +12,7 @@ import { AdminPage } from "../../refactoring/pages/AdminPage";
 import { CartItem, Coupon, Product } from "../../types";
 import { useCart, useCoupons, useProducts } from "../../refactoring/hooks";
 import * as cartUtils from "../../refactoring/models/cart";
+import * as productUtils from "../../refactoring/models/product";
 import { ProductProvider } from "../../refactoring/contexts/ProductContext";
 import { CouponProvider } from "../../refactoring/contexts/CouponContext";
 import { CartProvider } from "../../refactoring/contexts/CartContext";
@@ -363,18 +364,6 @@ describe("basic > ", () => {
       });
     });
 
-    describe("getMaxApplicableDiscount", () => {
-      test("할인이 적용되지 않으면 0을 반환해야 합니다.", () => {
-        const item: CartItem = { product: testProduct, quantity: 1 };
-        expect(cartUtils.getMaxApplicableDiscount(item)).toBe(0);
-      });
-
-      test("적용 가능한 가장 높은 할인율을 반환해야 합니다.", () => {
-        const item: CartItem = { product: testProduct, quantity: 5 };
-        expect(cartUtils.getMaxApplicableDiscount(item)).toBe(0.2);
-      });
-    });
-
     describe("calculateCartTotal", () => {
       const cart: CartItem[] = [
         { product: testProduct, quantity: 2 },
@@ -434,6 +423,31 @@ describe("basic > ", () => {
       test("재고 한도를 초과해서는 안 됩니다.", () => {
         const updatedCart = cartUtils.updateCartItemQuantity(cart, "1", 15);
         expect(updatedCart[0].quantity).toBe(10); // max stock is 10
+      });
+    });
+  });
+
+  describe("productUtils", () => {
+    const testProduct: Product = {
+      id: "1",
+      name: "Test Product",
+      price: 100,
+      stock: 10,
+      discounts: [
+        { quantity: 2, rate: 0.1 },
+        { quantity: 5, rate: 0.2 },
+      ],
+    };
+
+    describe("getMaxApplicableDiscount", () => {
+      test("할인이 적용되지 않으면 0을 반환해야 합니다.", () => {
+        const item: CartItem = { product: testProduct, quantity: 1 };
+        expect(productUtils.getMaxApplicableDiscount(item)).toBe(0);
+      });
+
+      test("적용 가능한 가장 높은 할인율을 반환해야 합니다.", () => {
+        const item: CartItem = { product: testProduct, quantity: 5 };
+        expect(productUtils.getMaxApplicableDiscount(item)).toBe(0.2);
       });
     });
   });

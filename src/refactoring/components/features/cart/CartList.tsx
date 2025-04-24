@@ -1,5 +1,5 @@
 import { useCartContext } from "../../../contexts/CartContext";
-import { getAppliedDiscount } from "../../../models/cart";
+import { getAppliedDiscount } from "../../../models/product";
 import { CartItem } from "./CartItem";
 
 export const CartList = () => {

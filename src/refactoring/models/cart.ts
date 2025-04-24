@@ -1,43 +1,12 @@
 import { CartItem, Coupon } from "../../types";
+import { applyCouponDiscount } from "./coupon";
+import { getMaxApplicableDiscount } from "./product";
 
 export const calculateItemTotal = (item: CartItem) => {
   const totalPrice = item.product.price * item.quantity;
   const discountRate = getMaxApplicableDiscount(item);
 
   return totalPrice * (1 - discountRate);
-};
-
-export const getMaxApplicableDiscount = (item: CartItem) => {
-  const applicableRates = item.product.discounts
-    .filter((rule) => item.quantity >= rule.quantity)
-    .map((rule) => rule.rate);
-
-  const maxDiscountRate = Math.max(0, ...applicableRates);
-
-  return maxDiscountRate;
-};
-
-export const getAppliedDiscount = (item: CartItem) => {
-  const { discounts } = item.product;
-  const { quantity } = item;
-
-  return discounts
-    .filter((discount) => quantity >= discount.quantity)
-    .reduce((maxRate, discount) => Math.max(maxRate, discount.rate), 0);
-};
-
-export const applyCouponDiscount = (
-  totalAmount: number,
-  selectedCoupon: Coupon
-) => {
-  switch (selectedCoupon.discountType) {
-    case "amount":
-      return totalAmount - selectedCoupon.discountValue;
-    case "percentage":
-      return totalAmount * (1 - selectedCoupon.discountValue / 100);
-    default:
-      return totalAmount;
-  }
 };
 
 export const calculateCartTotal = (
