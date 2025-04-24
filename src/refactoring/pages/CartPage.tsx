@@ -1,5 +1,5 @@
 import { CartList } from "../components/features/cart/CartList.tsx";
-import { ColumnLayout } from "../components/layout/ColumnLayout.tsx";
+import { ColumnLayout } from "../components/ui/layout/ColumnLayout.tsx";
 import { CouponSelector } from "../components/features/coupon/CouponSelector.tsx";
 import { OrderSummary } from "../components/features/cart/OrderSummary.tsx";
 import { ProductList } from "../components/features/product/ProductList.tsx";

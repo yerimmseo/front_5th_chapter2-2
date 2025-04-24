@@ -3,7 +3,7 @@ type Option = {
   value: string | number;
 };
 
-type SelectBoxProps = {
+type OptionSelectorProps = {
   value: string | number;
   options: Option[];
   className?: string;
@@ -11,13 +11,13 @@ type SelectBoxProps = {
   onChange: (value: string | number) => void;
 };
 
-export const SelectBox = ({
+export const OptionSelector = ({
   value,
   options,
   className = "",
   placeholder,
   onChange,
-}: SelectBoxProps) => {
+}: OptionSelectorProps) => {
   return (
     <select
       value={value}

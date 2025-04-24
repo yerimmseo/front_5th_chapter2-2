@@ -1,4 +1,4 @@
-import { ColumnLayout } from "../components/layout/ColumnLayout.tsx";
+import { ColumnLayout } from "../components/ui/layout/ColumnLayout.tsx";
 import { ProductManagement } from "../components/features/product/ProductManagement.tsx";
 import { CouponManagement } from "../components/features/coupon/CouponManagement.tsx";
 
