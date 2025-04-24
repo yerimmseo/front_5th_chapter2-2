@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useProductContext } from "../../../contexts/ProductContext";
 import { Accordion } from "../../ui/common/Accordion";
 import { formatCurrency } from "../../../utils";
 import { Discount, Product } from "../../../../types";
+import { FormFieldInput } from "../../ui/common/FormFieldInput";
 
 export const ProductEditForm = () => {
   const { products, updateProduct } = useProductContext();
@@ -27,28 +28,18 @@ export const ProductEditForm = () => {
     });
   };
 
-  // 새로운 핸들러 함수 추가
-  const handleProductNameUpdate = (productId: string, newName: string) => {
-    if (editingProduct && editingProduct.id === productId) {
-      const updatedProduct = { ...editingProduct, name: newName };
-      setEditingProduct(updatedProduct);
-    }
-  };
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, dataset } = e.target;
+    const productId = dataset.id;
+    const parseValue =
+      name === "price" || name === "stock" ? parseInt(value) || 0 : value;
 
-  // 새로운 핸들러 함수 추가
-  const handlePriceUpdate = (productId: string, newPrice: number) => {
-    if (editingProduct && editingProduct.id === productId) {
-      const updatedProduct = { ...editingProduct, price: newPrice };
-      setEditingProduct(updatedProduct);
+    if (!productId) {
+      return;
     }
-  };
 
-  const handleStockUpdate = (productId: string, newStock: number) => {
-    const updatedProduct = products.find((p) => p.id === productId);
-    if (updatedProduct) {
-      const newProduct = { ...updatedProduct, stock: newStock };
-      updateProduct(newProduct);
-      setEditingProduct(newProduct);
+    if (editingProduct && editingProduct.id === productId) {
+      setEditingProduct({ ...editingProduct, [name]: parseValue });
     }
   };
 
@@ -101,46 +92,40 @@ export const ProductEditForm = () => {
           title={
             <>
               {product.name} - {formatCurrency(product.price)}원 (재고:{" "}
-              {product.stock}
+              {product.stock})
             </>
           }
         >
           {editingProduct && editingProduct.id === product.id ? (
             <div>
               {/* 이전에 나눈 폼 필드와 비슷한 형식 */}
-              <div className="mb-4">
-                <label className="block mb-1">상품명: </label>
-                <input
-                  type="text"
-                  value={editingProduct.name}
-                  onChange={(e) =>
-                    handleProductNameUpdate(product.id, e.target.value)
-                  }
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1">가격: </label>
-                <input
-                  type="number"
-                  value={editingProduct.price}
-                  onChange={(e) =>
-                    handlePriceUpdate(product.id, parseInt(e.target.value))
-                  }
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1">재고: </label>
-                <input
-                  type="number"
-                  value={editingProduct.stock}
-                  onChange={(e) =>
-                    handleStockUpdate(product.id, parseInt(e.target.value))
-                  }
-                  className="w-full p-2 border rounded"
-                />
-              </div>
+              <FormFieldInput
+                label="상품명"
+                type="text"
+                name="name"
+                value={editingProduct.name}
+                editing={true}
+                data-id={product.id}
+                onChange={handleInputChange}
+              />
+              <FormFieldInput
+                label="가격"
+                type="number"
+                name="price"
+                value={editingProduct.price}
+                editing={true}
+                data-id={product.id}
+                onChange={handleInputChange}
+              />
+              <FormFieldInput
+                label="재고"
+                type="number"
+                name="stock"
+                value={editingProduct.stock}
+                editing={true}
+                data-id={product.id}
+                onChange={handleInputChange}
+              />
               {/* 할인 정보 수정 부분 */}
               <div>
                 <h4 className="text-lg font-semibold mb-2">할인 정보</h4>

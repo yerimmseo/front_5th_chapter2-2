@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductForm } from "./ProductForm";
+import { ProductAddForm } from "./ProductAddForm";
 import { ProductEditForm } from "./ProductEditForm";
 
 export const ProductManagement = () => {
@@ -15,7 +15,7 @@ export const ProductManagement = () => {
         {showNewProductForm ? "취소" : "새 상품 추가"}
       </button>
       {showNewProductForm && (
-        <ProductForm onSubmitComplete={() => setShowNewProductForm(false)} />
+        <ProductAddForm onSubmitComplete={() => setShowNewProductForm(false)} />
       )}
       <ProductEditForm />
     </div>
