@@ -1,3 +1,3 @@
-export * from "./entities/useCart.ts";
-export * from "./entities/useCoupon.ts";
-export * from "./entities/useProduct.ts";
+export * from "./useCart.ts";
+export * from "./useCoupon.ts";
+export * from "./useProduct.ts";
