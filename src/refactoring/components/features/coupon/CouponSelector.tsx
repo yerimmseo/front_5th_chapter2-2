@@ -1,6 +1,6 @@
 import { useCartContext } from "../../../contexts/CartContext";
 import { useCouponContext } from "../../../contexts/CouponContext";
-import { localizedNumberFormat } from "../../../utils/formatting";
+import { formatCurrency } from "../../../utils/formatCurrency";
 import { SelectBox } from "../../common/SelectBox";
 
 export const CouponSelector = () => {
@@ -19,7 +19,7 @@ export const CouponSelector = () => {
         options={coupons.map((coupon, index) => ({
           label: `${coupon.name} - ${
             coupon.discountType === "amount"
-              ? `${localizedNumberFormat(coupon.discountValue)}원`
+              ? `${formatCurrency(coupon.discountValue)}원`
               : `${coupon.discountValue}%`
           }`,
           value: index,
@@ -30,7 +30,7 @@ export const CouponSelector = () => {
         <p className="text-green-600">
           적용된 쿠폰: {selectedCoupon.name}(
           {selectedCoupon.discountType === "amount"
-            ? `${localizedNumberFormat(selectedCoupon.discountValue)}원`
+            ? `${formatCurrency(selectedCoupon.discountValue)}원`
             : `${selectedCoupon.discountValue}%`}{" "}
           할인)
         </p>

@@ -6,7 +6,7 @@ import { Coupon, Product } from "../../types";
 import { ProductProvider } from "../../refactoring/contexts/ProductContext";
 import { CouponProvider } from "../../refactoring/contexts/CouponContext";
 import { CartProvider } from "../../refactoring/contexts/CartContext";
-import { localizedNumberFormat } from "../../refactoring/utils/formatting";
+import { formatCurrency } from "../../refactoring/utils/formatCurrency";
 
 const mockProducts: Product[] = [
   {
@@ -274,17 +274,17 @@ describe("advanced > ", () => {
   //   });
   // });
 
-  describe("localizedNumberFormat", () => {
+  describe("formatCurrency", () => {
     test("1000을 입력하면 '1,000'을 반환한다.", () => {
-      expect(localizedNumberFormat(1000)).toBe("1,000");
+      expect(formatCurrency(1000)).toBe("1,000");
     });
 
     test("0을 입력하면 '0'을 반환한다.", () => {
-      expect(localizedNumberFormat(0)).toBe("0");
+      expect(formatCurrency(0)).toBe("0");
     });
 
     test("음수를 입력하면 음수도 지역화된 문자열로 반환한다.", () => {
-      expect(localizedNumberFormat(-1234)).toBe("-1,234");
+      expect(formatCurrency(-1234)).toBe("-1,234");
     });
   });
 });
