@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { describe, expect, test } from "vitest";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { CartPage } from "../../refactoring/pages/CartPage";
-import { AdminPage } from "../../refactoring/components/AdminPage";
+import { AdminPage } from "../../refactoring/pages/AdminPage";
 import { Coupon, Product } from "../../types";
 import { ProductProvider } from "../../refactoring/contexts/ProductContext";
 import { CouponProvider } from "../../refactoring/contexts/CouponContext";
@@ -47,31 +46,14 @@ const mockCoupons: Coupon[] = [
 ];
 
 const TestAdminPage = () => {
-  const [products, setProducts] = useState<Product[]>(mockProducts);
-  const [coupons, setCoupons] = useState<Coupon[]>(mockCoupons);
-
-  const handleProductUpdate = (updatedProduct: Product) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
-    );
-  };
-
-  const handleProductAdd = (newProduct: Product) => {
-    setProducts((prevProducts) => [...prevProducts, newProduct]);
-  };
-
-  const handleCouponAdd = (newCoupon: Coupon) => {
-    setCoupons((prevCoupons) => [...prevCoupons, newCoupon]);
-  };
-
   return (
-    <AdminPage
-      products={products}
-      coupons={coupons}
-      onProductUpdate={handleProductUpdate}
-      onProductAdd={handleProductAdd}
-      onCouponAdd={handleCouponAdd}
-    />
+    <ProductProvider initialProducts={mockProducts}>
+      <CouponProvider initialCoupons={mockCoupons}>
+        <CartProvider>
+          <AdminPage />
+        </CartProvider>
+      </CouponProvider>
+    </ProductProvider>
   );
 };
 
