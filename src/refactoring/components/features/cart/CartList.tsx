@@ -12,7 +12,13 @@ export const CartList = () => {
         {cart.map((item) => {
           const appliedDiscount = getAppliedDiscount(item);
 
-          return <CartItem item={item} appliedDiscount={appliedDiscount} />;
+          return (
+            <CartItem
+              item={item}
+              appliedDiscount={appliedDiscount}
+              key={item.product.id}
+            />
+          );
         })}
       </div>
     </>
